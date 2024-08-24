@@ -1,0 +1,33 @@
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sliderWrapper {
+  display: flex;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.sliderSlide {
+  min-width: 100%;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* Align content closer to the bottom */
+  background-size: contain; /* Make the image larger */
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-bottom: 20px; /* Adjust the spacing from the bottom */
+}
+
+.sliderSlideEnterActive {
+  opacity: 1;
+}
+
+.sliderSlideExitActive {
+  opacity: 0;
+}
