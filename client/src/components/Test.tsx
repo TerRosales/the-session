@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Container, Box, IconButton, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { sessions } from "../utility/data"; // Import sessions data
@@ -22,7 +22,7 @@ const Test: React.FC = () => {
   };
 
   return (
-    <Box
+    <Container
       className="sliderContainer"
       sx={{
         backgroundColor: theme.palette.background.default,
@@ -37,7 +37,7 @@ const Test: React.FC = () => {
       <Box
         className="sliderWrapper"
         sx={{
-          minHeight: "80vh",
+          minHeight: "70vh",
           transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
@@ -54,12 +54,11 @@ const Test: React.FC = () => {
             }}
           >
             <Box
+              className="lg:w-[70%] w-[45%]"
               sx={{
-                backgroundColor: "rgba(0, 0, 0, 0.8)", // Black background with 80% opacity
+                backgroundColor: "rgba(0, 0, 0, 0.8)", // Black background with 80% opacity,
                 borderRadius: "10px",
                 padding: "20px",
-                maxWidth: "800px", // Fixed width to prevent resizing
-                width: "100%", // Ensure it occupies full width within maxWidth
                 textAlign: "left",
                 position: "relative",
                 bottom: "50px", // Move it higher by reducing the value
@@ -115,6 +114,7 @@ const Test: React.FC = () => {
             },
             "&:active": {
               transform: "scale(1)", // Reset scale on click
+              backgroundColor: theme.palette.background.default, // Ensure background color change on active
             },
           }}
         >
@@ -150,6 +150,8 @@ const Test: React.FC = () => {
               transform: "rotate(45deg)", // Rotate the button on hover
             },
             "&:active": {
+              backgroundColor: theme.palette.background.default, // Ensure background color change on active
+              color: "#fff",
               transform: "scale(1)", // Reset scale on click
             },
           }}
@@ -165,7 +167,7 @@ const Test: React.FC = () => {
           />
         </IconButton>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

@@ -1,7 +1,9 @@
+/* Slider.css */
 .sliderContainer {
   position: relative;
   width: 100%;
   overflow: hidden;
+  min-height: 70vh;
 }
 
 .sliderWrapper {
@@ -17,11 +19,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* Align content closer to the bottom */
-  background-size: contain; /* Make the image larger */
+  justify-content: flex-end;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  padding-bottom: 20px; /* Adjust the spacing from the bottom */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .sliderSlideEnterActive {
@@ -30,4 +33,40 @@
 
 .sliderSlideExitActive {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .sliderContainer {
+    min-height: 50vh;
+  }
+
+  .sliderSlide {
+    padding: 10px;
+  }
+
+  .sliderSlide h3 {
+    font-size: 1.5rem;
+  }
+
+  .sliderSlide p {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sliderContainer {
+    min-height: 40vh;
+  }
+
+  .sliderSlide h3 {
+    font-size: 1.25rem;
+  }
+
+  .sliderSlide p {
+    font-size: 0.75rem;
+  }
+}
+
+.color {
+  color: #ef1919;
 }
