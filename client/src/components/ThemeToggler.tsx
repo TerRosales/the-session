@@ -2,6 +2,7 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import LightModeSharpIcon from "@mui/icons-material/LightModeSharp";
 import ModeNightSharpIcon from "@mui/icons-material/ModeNightSharp";
+import "../pages/styles/Home.css"; // Ensure this is correctly linked to your CSS
 
 interface ThemeTogglerProps {
   onThemeToggle: (event: React.MouseEvent<HTMLElement>) => void;
@@ -19,16 +20,7 @@ const ThemeToggler: React.FC<ThemeTogglerProps> = ({
         event.preventDefault(); // Prevent default action if any
         onThemeToggle(event);
       }}
-      className="themeToggler"
-      sx={{
-        transition: "transform 0.3s ease",
-        "&:hover": {
-          transform: "translateY(-5px)",
-        },
-        "&:active": {
-          animation: "subtleScale 0.3s ease forwards",
-        },
-      }}
+      className="themeToggler" // Apply the CSS class
     >
       {darkMode ? <LightModeSharpIcon /> : <ModeNightSharpIcon />}
     </IconButton>

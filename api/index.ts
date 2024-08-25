@@ -1,8 +1,9 @@
 // ./api/index.ts
-
 import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.route";
+import userRoutes from "./routes/user.route";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -35,3 +36,6 @@ app.listen(port, () => {
     res.send("Backend is up and running with MongoDB!");
   });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);

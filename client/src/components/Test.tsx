@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { sessions } from "../utility/data"; // Import sessions data
