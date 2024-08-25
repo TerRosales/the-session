@@ -1,0 +1,102 @@
+.linkHover::before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.linkHover:hover::before {
+  width: 100%;
+}
+
+.linkHover {
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.linkHover:hover {
+  color: #a569bd; /* Amethyst */
+  transform: translateY(-4px);
+}
+
+.linkClick {
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.linkClick:active {
+  transform: scale(0.95);
+  color: #bb8fce; /* Wisteria */
+}
+
+.linkHoverGlow {
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.linkHoverGlow:hover {
+  text-shadow: 0 0 20px rgba(165, 105, 189, 1); /* More obvious Amethyst Glow */
+  transform: translateY(-4px); /* Lift effect */
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  display: none;
+  min-width: 160px;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.dropdownMenuItem {
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdownMenuItem:hover {
+  background-color: #dcdcdc; /* Gainsboro */
+}
+
+.dropdown:hover .dropdownMenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdownMenu {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdownToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdownIcon {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdownIcon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 600px) {
+  .dropdownMenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+  }
+}

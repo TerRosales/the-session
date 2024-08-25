@@ -7,18 +7,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
-import LightModeSharpIcon from "@mui/icons-material/LightModeSharp";
-import ModeNightSharpIcon from "@mui/icons-material/ModeNightSharp";
-import { Link } from "react-router-dom";
-
-const pages = [
-  { name: "Home", path: "/" },
-  { name: "Mission", path: "/mission" },
-  { name: "Movements", path: "/movements" },
-];
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Link, useNavigate } from "react-router-dom";
+import "./styles/Header.css";
+import { pages } from "../utility/data";
+import ThemeToggler from "./ThemeToggler";
 
 interface HeaderProps {
   onThemeToggle: () => void;
@@ -26,9 +21,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = React.useState(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -36,28 +34,56 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    setDropdownOpen(false);
+    setMobileDropdownOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleMobileDropdown = () => {
+    setMobileDropdownOpen(!mobileDropdownOpen);
+  };
+
+  const handleMouseEnter = () => {
+    if (window.innerWidth >= 960) {
+      setDropdownOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth >= 960) {
+      setDropdownOpen(false);
+    }
+  };
+
+  const handleLogoClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // Prevents the theme toggler from being triggered
+    event.preventDefault(); // Prevents any default anchor behavior
+    navigate("/"); // Programmatically navigates to the home page
   };
 
   return (
     <AppBar position="static" sx={{ py: 3 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* Single Typography component with responsive display */}
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={handleLogoClick}
             sx={{
               py: 1,
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              fontSize: 25,
+              letterSpacing: ".2rem",
+              fontSize: 40,
               color: "inherit",
               textDecoration: "none",
               display: { xs: "none", md: "flex" },
+              cursor: "pointer", // Add a pointer cursor for better UX
             }}
           >
             THE SESSION
@@ -90,15 +116,69 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
               onClose={handleCloseNavMenu}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">
-                    <Link
-                      to={page.path}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {page.name}
-                    </Link>
-                  </Typography>
+                <MenuItem key={page.name}>
+                  <Box
+                    sx={{ position: "relative", width: "100%" }}
+                    className="dropdown"
+                  >
+                    {page.name === "Movements" ? (
+                      <Button
+                        sx={{
+                          color: "inherit",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          fontWeight: 700,
+                        }}
+                        className="linkHover linkClick linkHoverGlow"
+                        onClick={toggleMobileDropdown}
+                      >
+                        {page.name}
+                        <ArrowDropDownIcon className="dropdownIcon" />
+                      </Button>
+                    ) : (
+                      <Button
+                        sx={{
+                          color: "inherit",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          fontWeight: 700,
+                        }}
+                        className="linkHover linkClick linkHoverGlow"
+                        component={Link}
+                        to={page.path}
+                        onClick={handleCloseNavMenu}
+                      >
+                        {page.name}
+                      </Button>
+                    )}
+                    {page.name === "Movements" && mobileDropdownOpen && (
+                      <Box className="dropdownMenu">
+                        <Link
+                          to="/sub-page-1"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 1
+                        </Link>
+                        <Link
+                          to="/sub-page-2"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 2
+                        </Link>
+                        <Link
+                          to="/sub-page-3"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 3
+                        </Link>
+                      </Box>
+                    )}
+                  </Box>
                 </MenuItem>
               ))}
             </Menu>
@@ -108,48 +188,90 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={handleLogoClick}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontSize: 20,
               fontFamily: "monospace",
-              fontWeight: 500,
+              fontWeight: 700,
               letterSpacing: ".1rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer", // Add a pointer cursor for better UX
             }}
           >
             THE SESSION
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: "inherit",
-                  display: "block",
-                  fontSize: 15,
-                  fontWeight: 500,
-                }}
-                component={Link}
-                to={page.path}
-              >
-                {page.name}
-              </Button>
-            ))}
+            {pages.map((page) => {
+              if (page.name === "Movements") {
+                return (
+                  <Box
+                    key={page.name}
+                    sx={{ position: "relative" }}
+                    className="dropdown"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Button
+                      sx={{
+                        my: 2,
+                        color: "inherit",
+                        display: "flex",
+                        alignItems: "center",
+                        fontSize: 15,
+                        fontWeight: 700,
+                        position: "relative",
+                      }}
+                      className="linkHover linkClick linkHoverGlow dropdownToggle"
+                    >
+                      {page.name}
+                      <ArrowDropDownIcon className="dropdownIcon" />
+                    </Button>
+                    {dropdownOpen && (
+                      <Box className="dropdownMenu">
+                        <Link to="/sub-page-1" className="dropdownMenuItem">
+                          Sub Page 1
+                        </Link>
+                        <Link to="/sub-page-2" className="dropdownMenuItem">
+                          Sub Page 2
+                        </Link>
+                        <Link to="/sub-page-3" className="dropdownMenuItem">
+                          Sub Page 3
+                        </Link>
+                      </Box>
+                    )}
+                  </Box>
+                );
+              } else {
+                return (
+                  <Button
+                    key={page.name}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: "inherit",
+                      display: "block",
+                      fontSize: 15,
+                      fontWeight: 700,
+                      position: "relative",
+                    }}
+                    component={Link}
+                    to={page.path}
+                    className="linkHover linkClick linkHoverGlow"
+                  >
+                    {page.name}
+                  </Button>
+                );
+              }
+            })}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Toggle Light/Dark Theme">
-              <IconButton color="inherit" onClick={onThemeToggle}>
-                {darkMode ? <LightModeSharpIcon /> : <ModeNightSharpIcon />}
-              </IconButton>
-            </Tooltip>
+            <ThemeToggler onThemeToggle={onThemeToggle} darkMode={darkMode} />
           </Box>
         </Toolbar>
       </Container>

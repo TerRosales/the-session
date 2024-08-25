@@ -22,12 +22,12 @@ const Test: React.FC = () => {
   };
 
   return (
-    <Container
+    <Box
       className="sliderContainer"
       sx={{
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
-        minHeight: "70vh",
+        minHeight: "80vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -167,7 +167,7 @@ const Test: React.FC = () => {
           />
         </IconButton>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

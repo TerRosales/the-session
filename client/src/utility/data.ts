@@ -62,3 +62,9 @@ export const sessions: HomeContent[] = [
     instructor: "Kim 'Freeze' Brown", // New key object value
   },
 ];
+
+export const pages = [
+  { name: "About", path: "/" },
+  { name: "Mission", path: "/mission" },
+  { name: "Movements", path: "/movements" },
+];
