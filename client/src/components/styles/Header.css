@@ -92,6 +92,37 @@
   transform: rotate(180deg);
 }
 
+/* styles/Header.css */
+@keyframes liftUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes subtleScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.themeToggler:hover {
+  animation: liftUp 0.3s ease forwards;
+}
+
+.themeToggler:active {
+  animation: subtleScale 0.3s ease forwards;
+}
+
+
 @media (max-width: 600px) {
   .dropdownMenu {
     position: relative;
@@ -100,3 +131,5 @@
     box-shadow: none;
   }
 }
+
+

@@ -24,7 +24,7 @@ export const darkTheme = createTheme({
       main: "#0b0b0b", // A suitable dark theme primary color
     },
     background: {
-      default: "#161616ef", // Standard dark mode background
+      default: "#171717ef", // Standard dark mode background
       paper: "#1d1d1d",
     },
     text: {

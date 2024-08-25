@@ -38,10 +38,6 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
     setMobileDropdownOpen(false);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
   const toggleMobileDropdown = () => {
     setMobileDropdownOpen(!mobileDropdownOpen);
   };
@@ -65,7 +61,16 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
   };
 
   return (
-    <AppBar position="static" sx={{ py: 3 }}>
+    <AppBar
+      position="static"
+      sx={{
+        py: 3,
+        backgroundColor: darkMode ? "#0a0a0a" : "#ffffff",
+        borderBottom: darkMode
+          ? "2px solid rgba(255, 255, 255, 0.3)" // Light border for dark mode
+          : "2px solid rgba(0, 0, 0, 0.1)", // Dark border for light mode
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -176,6 +181,27 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
                         >
                           Sub Page 3
                         </Link>
+                        <Link
+                          to="/sub-page-4"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 4
+                        </Link>
+                        <Link
+                          to="/sub-page-5"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 5
+                        </Link>
+                        <Link
+                          to="/sub-page-6"
+                          className="dropdownMenuItem"
+                          onClick={handleCloseNavMenu}
+                        >
+                          Sub Page 6
+                        </Link>
                       </Box>
                     )}
                   </Box>
@@ -241,6 +267,15 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
                         </Link>
                         <Link to="/sub-page-3" className="dropdownMenuItem">
                           Sub Page 3
+                        </Link>
+                        <Link to="/sub-page-4" className="dropdownMenuItem">
+                          Sub Page 4
+                        </Link>
+                        <Link to="/sub-page-5" className="dropdownMenuItem">
+                          Sub Page 5
+                        </Link>
+                        <Link to="/sub-page-6" className="dropdownMenuItem">
+                          Sub Page 6
                         </Link>
                       </Box>
                     )}

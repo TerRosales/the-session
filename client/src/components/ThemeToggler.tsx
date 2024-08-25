@@ -19,6 +19,16 @@ const ThemeToggler: React.FC<ThemeTogglerProps> = ({
         event.preventDefault(); // Prevent default action if any
         onThemeToggle(event);
       }}
+      className="themeToggler"
+      sx={{
+        transition: "transform 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-5px)",
+        },
+        "&:active": {
+          animation: "subtleScale 0.3s ease forwards",
+        },
+      }}
     >
       {darkMode ? <LightModeSharpIcon /> : <ModeNightSharpIcon />}
     </IconButton>
