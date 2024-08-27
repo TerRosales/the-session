@@ -7,6 +7,8 @@ import Test from "./components/Test";
 import Home from "./pages/Home";
 import Mission from "./pages/Mission";
 import Movements from "./pages/Movements";
+import Signin from "./pages/registration/Signin";
+import Signup from "./pages/registration/Signup";
 import Box from "@mui/material/Box";
 
 interface AppProps {
@@ -27,6 +29,8 @@ const App: React.FC<AppProps> = ({ darkMode, onThemeToggle }) => {
           <Route path="/" element={<Home />} />
           <Route path="/mission" element={<Mission />} />
           <Route path="/movements" element={<Movements />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/test" element={<Test />} />
         </Routes>
       </Box>

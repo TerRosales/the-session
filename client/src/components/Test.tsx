@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { sessions } from "../utility/data"; // Import sessions data
+import { quote } from "../utility/data"; // Import quote data
 import "./styles/Slider.css";
 
 const Test: React.FC = () => {
@@ -11,13 +11,13 @@ const Test: React.FC = () => {
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? sessions.length - 1 : prevIndex - 1
+      prevIndex === 0 ? quote.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === sessions.length - 1 ? 0 : prevIndex + 1
+      prevIndex === quote.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -41,7 +41,7 @@ const Test: React.FC = () => {
           transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
-        {sessions.map((session, index) => (
+        {quote.map((session, index) => (
           <Box
             key={session.id}
             className={`sliderSlide ${

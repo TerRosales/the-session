@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { globalStyles } from "../global.ts";
 import "../pages/styles/Home.css";
 
 interface UpcomingEventProps {
   title: string;
   date: string;
   description: string;
+  imageUrl: string;
   onClick: () => void;
 }
 
@@ -14,40 +16,50 @@ const UpcomingEvent: React.FC<UpcomingEventProps> = ({
   title,
   date,
   description,
+  imageUrl,
   onClick,
 }) => {
   const theme = useTheme();
-
-  // Determine button color based on the current theme mode
-  const buttonBgColor =
-    theme.palette.mode === "light"
-      ? theme.palette.grey[800] // Darker color for light mode
-      : theme.palette.grey[200]; // Lighter color for dark mode
-
-  const buttonTextColor =
-    theme.palette.mode === "light"
-      ? theme.palette.getContrastText(theme.palette.grey[800])
-      : theme.palette.getContrastText(theme.palette.grey[200]);
 
   return (
     <Box
       sx={{
         padding: 3,
-        borderRadius: "8px",
+        borderRadius: "12px", // Slightly increased for more depth
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.getContrastText(theme.palette.primary.main),
         marginBottom: 4,
         textAlign: "center",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        width: { xs: "100%", sm: "350px" },
+        height: { xs: "auto", sm: "500px" },
+        marginLeft: "auto",
+        marginRight: "auto",
+        boxShadow:
+          theme.palette.mode === "light"
+            ? "0 4px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(255, 255, 255, 0.1)" // Deeper shadow with a subtle inner glow effect
+            : "0 4px 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.2)",
         "&:hover": {
-          transform: "translateY(-5px)",
+          transform: "translateY(-8px)",
           boxShadow:
             theme.palette.mode === "light"
-              ? "0 4px 20px rgba(0, 0, 0, 0.1)"
-              : "0 4px 20px rgba(0, 0, 0, 0.5)",
+              ? "0 6px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.15)" // Stronger shadow and glow on hover
+              : "0 6px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.25)",
         },
       }}
     >
+      <Box
+        component="img"
+        src={imageUrl}
+        alt={title}
+        sx={{
+          width: "100%",
+          height: "200px",
+          objectFit: "cover",
+          borderRadius: "12px 12px 0 0", // Matching the card's rounded corners
+          marginBottom: 2,
+        }}
+      />
       <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 1 }}>
         {title}
       </Typography>
@@ -60,32 +72,7 @@ const UpcomingEvent: React.FC<UpcomingEventProps> = ({
       <Button
         variant="contained"
         onClick={onClick}
-        sx={{
-          backgroundColor: buttonBgColor,
-          color: buttonTextColor,
-          border: "1px solid rgba(165, 105, 189, 0.5)",
-          padding: "8px 16px",
-          transition:
-            "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
-          "&:hover": {
-            backgroundColor: buttonTextColor,
-            color: buttonBgColor,
-            boxShadow:
-              "0 4px 10px rgba(0, 0, 0, 0.15), 0 0 20px 5px rgba(165, 105, 189, 0.6)",
-            transform: "translateY(-4px)",
-            borderColor: "rgba(165, 105, 189, 1)",
-          },
-          "&:active": {
-            animation: "semiBounce 0.4s ease, drawBorder 0.5s linear forwards",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            borderColor: "rgba(165, 105, 189, 1)",
-          },
-          "&:focus": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
+        sx={globalStyles.glowEffect}
       >
         Learn More
       </Button>
