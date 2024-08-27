@@ -1,0 +1,44 @@
+.glowButton {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid rgba(165, 105, 189, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.glowButton:hover {
+  box-shadow: 0 3px 6px rgba(180, 180, 180, 0.1),
+    /* Less gray on hover */ 0 0 12px 4px rgba(165, 105, 189, 0.5);
+  transform: translateY(-4px);
+  border-color: rgba(165, 105, 189, 1);
+}
+
+.glowButton:active {
+  animation: semiBounce 0.4s ease, drawBorder 0.5s linear forwards;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(165, 105, 189, 1);
+}
+
+.glowButton:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Focus styles for TextField components */
+.textField-focused .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: rgba(165, 105, 189, 1); /* Matching border color */
+}
+
+.textField-focused .MuiInputLabel-root.Mui-focused {
+  color: rgba(165, 105, 189, 1); /* Matching label color */
+}
+
+.textField-focused .MuiOutlinedInput-root.Mui-focused {
+  background-color: rgba(206, 174, 220, 0.9); /* Light mode background color */
+}
+
+/* Dark mode adjustments */
+body[data-theme="dark"] .textField-focused .MuiOutlinedInput-root.Mui-focused {
+  background-color: rgba(44, 44, 84, 0.9); /* Dark mode background color */
+}

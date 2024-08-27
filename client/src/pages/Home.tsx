@@ -19,6 +19,7 @@ const Home: React.FC = () => {
         ...globalStyles.pageContainer,
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
+        minHeight: "100vh",
       }}
     >
       <Typography variant="h2" sx={globalStyles.textTitle}>

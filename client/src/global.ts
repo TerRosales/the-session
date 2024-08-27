@@ -45,10 +45,8 @@ export const globalStyles: GlobalStyles = {
   pageContainer: {
     paddingY: { xs: 5, sm: 10, md: 12, lg: 15 },
     paddingX: { xs: 2, sm: 4 },
-    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
   },
   textTitle: {

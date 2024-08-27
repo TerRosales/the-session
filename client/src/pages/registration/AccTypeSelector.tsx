@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { globalStyles } from "../../global.ts"; // Import your global styles
 
@@ -18,14 +18,28 @@ const AccTypeSelector: React.FC<AccTypeSelectorProps> = ({
   const isLightMode = theme.palette.mode === "light";
 
   return (
-    <div style={{ textAlign: "center", margin: "20px 0" }}>
+    <div style={{ textAlign: "center", margin: "25% 0" }}>
       <Typography
         sx={{ ...globalStyles.textSubTitle, color: theme.palette.text.primary }}
       >
         Select Account Type:
       </Typography>
-      <div style={{ display: "inline-flex", gap: "10px" }}>
-        {["HOST", "INSTRUCTOR", "LEARNER/PARTICIPANT/GUEST"].map((type) => (
+      <Box
+        sx={{
+          display: "flex",
+          gap: "10px",
+          flexDirection: {
+            xs: "column", // Stack vertically on extra-small screens
+            sm: "row", // Stack horizontally on small screens
+            lg: "row", // Stack horizontally on large screens
+            xl: "row", // Stack horizontally on extra-large screens
+          },
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        {["HOST", "INSTRUCTOR", "LEARNER / GUEST"].map((type) => (
           <Button
             key={type}
             onClick={() => setAccountType(type as any)}
@@ -49,7 +63,7 @@ const AccTypeSelector: React.FC<AccTypeSelectorProps> = ({
                 accountType === type
                   ? "none"
                   : `1px solid ${theme.palette.divider}`, // Border for unselected buttons
-              borderRadius: 0, // Remove border radius
+              borderRadius: 1, // Remove border radius
               "&:hover": {
                 backgroundColor:
                   accountType === type
@@ -73,7 +87,7 @@ const AccTypeSelector: React.FC<AccTypeSelectorProps> = ({
             {type}
           </Button>
         ))}
-      </div>
+      </Box>
     </div>
   );
 };
