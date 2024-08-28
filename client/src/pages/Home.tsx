@@ -31,14 +31,12 @@ const Home: React.FC = () => {
           ...globalStyles.textStatement,
         }}
       >
-        Welcome to your ultimate platform for learning, connecting, and growing
-        in the art of breakdancing. While we&apos;re just getting started, our
-        goal is to bring you an incredible experience. Right now, you can
-        explore upcoming sessions, discover new locations, and connect with
-        fellow dancers worldwide. And stay tuned—exciting tutorials, events, and
-        new features are coming soon! We&apos;re working hard to make this the
-        go-to spot for everything breakdancing. Get ready to elevate your skills
-        and join the community!
+        "The Session" is a movement by dancers, for dancers—a community built to
+        unite and elevate every artist. It's more than a platform; it's where
+        passion meets purpose. Here, motivated dancers share their skills, guide
+        the next generation, and inspire growth at every level. Join us to break
+        boundaries, support each other, and keep the art of dance alive. This is
+        where real dancers rise, together.
       </Typography>
 
       <Typography

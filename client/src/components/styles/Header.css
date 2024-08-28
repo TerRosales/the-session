@@ -52,6 +52,8 @@
   min-width: 160px;
   padding: 10px 0;
   transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .dropdownMenuItem {
@@ -72,11 +74,6 @@
   transform: translateY(0);
 }
 
-.dropdownMenu {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
 .dropdownToggle {
   display: flex;
   align-items: center;
@@ -92,7 +89,46 @@
   transform: rotate(180deg);
 }
 
-/* styles/Header.css */
+/* New styles for expanding the dropdown on mobile and making it larger */
+
+@media (max-width: 960px) {
+  .dropdownMenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    transform: translateY(0);
+    opacity: 1;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  .dropdownMenuItem {
+    font-size: 18px; /* Increase the font size */
+    padding: 12px 25px; /* Increase padding for larger click area */
+  }
+}
+
+@media (max-width: 600px) {
+  .dropdownMenuItem {
+    font-size: 20px; /* Further increase font size for smaller screens */
+    padding: 15px 30px; /* Further increase padding */
+  }
+
+  .dropdownMenu {
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    transform: translateY(0);
+    opacity: 1;
+    padding: 0;
+  }
+}
+
+/* Additional hover and active effects */
+
 @keyframes liftUp {
   from {
     transform: translateY(0);
@@ -121,15 +157,3 @@
 .themeToggler:active {
   animation: subtleScale 0.3s ease forwards;
 }
-
-
-@media (max-width: 600px) {
-  .dropdownMenu {
-    position: relative;
-    top: 0;
-    left: 0;
-    box-shadow: none;
-  }
-}
-
-

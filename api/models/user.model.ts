@@ -43,6 +43,7 @@ export interface UserDocument extends Document {
   city?: string;
   state?: string;
   dateOfBirth: Date;
+  isWaiverSigned?: boolean;
   age?: number;
   accountType: "HOST" | "INSTRUCTOR" | "LEARNER/PARTICIPANT/GUEST";
   phoneNumber?: string;

@@ -12,32 +12,32 @@ interface GlobalStyles {
 }
 
 const glowEffect: SxProps<Theme> = (theme) => ({
-  border: "1px solid rgba(165, 105, 189, 0.5)", // Thin border matching the glow
+  border: "1px solid rgba(165, 105, 189, 0.5)",
   transition:
     "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
   "&:hover": {
     boxShadow:
-      "0 3px 6px rgba(0, 0, 0, 0.1), 0 0 12px 4px rgba(165, 105, 189, 0.5)", // Smaller shadow and glow on hover
-    transform: "translateY(-4px)", // Lift effect
-    borderColor: "rgba(165, 105, 189, 1)", // Make the border more prominent on hover
+      "0 3px 6px rgba(0, 0, 0, 0.1), 0 0 12px 4px rgba(165, 105, 189, 0.5)",
+    transform: "translateY(-4px)",
+    borderColor: "rgba(165, 105, 189, 1)",
     ...(theme.palette.mode === "dark" && {
-      backgroundColor: "var(--button-text-color)", // Flip background color only in dark mode
-      color: "var(--button-bg-color)", // Flip text color only in dark mode
+      backgroundColor: "var(--button-text-color)",
+      color: "var(--button-bg-color)",
     }),
     ...(theme.palette.mode === "light" && {
-      backgroundColor: "rgba(245, 245, 245, 0.9)", // Lighter background in light mode
-      color: theme.palette.text.primary, // Ensure text is readable
+      backgroundColor: "rgba(245, 245, 245, 0.9)",
+      color: theme.palette.text.primary,
     }),
   },
   "&:active": {
-    animation: "semiBounce 0.4s ease, drawBorder 0.5s linear forwards", // Apply semi-bounce and draw border
+    animation: "semiBounce 0.4s ease, drawBorder 0.5s linear forwards",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: "rgba(165, 105, 189, 1)", // Ensure border is drawn
+    borderColor: "rgba(165, 105, 189, 1)",
   },
   "&:focus": {
-    outline: "none", // Remove the focus outline
-    boxShadow: "none", // Remove the focus shadow
+    outline: "none",
+    boxShadow: "none",
   },
 });
 
@@ -47,6 +47,7 @@ export const globalStyles: GlobalStyles = {
     paddingX: { xs: 2, sm: 4 },
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
   },
   textTitle: {
@@ -83,9 +84,9 @@ export const globalStyles: GlobalStyles = {
     marginTop: { xs: 4, sm: 6, lg: 8 },
   },
   glowEffect, // Assign the glowEffect separately
-  globalButton: {
+  globalButton: (theme) => ({
     padding: "8px 16px",
     backgroundColor: "transparent", // Set to transparent or define a default color
-    ...glowEffect, // Spread the glowEffect styles here
-  },
+    ...glowEffect(theme), // Apply the glowEffect styles directly here
+  }),
 };

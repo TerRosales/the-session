@@ -124,3 +124,48 @@ export const events: HomeContent[] = [
     instructor: "Carlos 'Spin' Rodriguez",
   },
 ];
+
+export const checklistData = {
+  termsAndCondition: {
+    checklist: [
+      { id: 1, checked: false, text: "Agree to the Terms of Service" },
+      { id: 2, checked: false, text: "Accept the Privacy Policy" },
+      { id: 3, checked: false, text: "Subscribe to the Newsletter" },
+      { id: 4, checked: false, text: "Agree to the Cookie Policy" },
+      { id: 5, checked: false, text: "Review the User Agreement" },
+    ],
+  },
+};
+
+export const checklistData2 = {
+  termsAndCondition: {
+    guest: [
+      { id: 1, checked: false, text: "Agree to the Terms of Service" },
+      { id: 2, checked: false, text: "Accept the Privacy Policy" },
+      { id: 3, checked: false, text: "Opt into Promotional Emails" },
+      { id: 4, checked: false, text: "Agree to the Cookie Policy" },
+      { id: 5, checked: false, text: "Review the Community Guidelines" },
+    ],
+    learner: [
+      { id: 1, checked: false, text: "Agree to the Learning Agreement" },
+      { id: 2, checked: false, text: "Accept the Privacy Policy" },
+      { id: 3, checked: false, text: "Join the Study Group" },
+      { id: 4, checked: false, text: "Agree to the Academic Honesty Policy" },
+      { id: 5, checked: false, text: "Review the Course Terms" },
+    ],
+    host: [
+      { id: 1, checked: false, text: "Agree to the Host Terms of Service" },
+      { id: 2, checked: false, text: "Accept the Event Policy" },
+      { id: 3, checked: false, text: "Provide Emergency Contact Info" },
+      { id: 4, checked: false, text: "Agree to the Liability Waiver" },
+      { id: 5, checked: false, text: "Review the Venue Guidelines" },
+    ],
+    instructor: [
+      { id: 1, checked: false, text: "Agree to the Instructor Agreement" },
+      { id: 2, checked: false, text: "Accept the Code of Conduct" },
+      { id: 3, checked: false, text: "Complete the Background Check" },
+      { id: 4, checked: false, text: "Agree to the Payment Terms" },
+      { id: 5, checked: false, text: "Review the Course Materials Policy" },
+    ],
+  },
+};

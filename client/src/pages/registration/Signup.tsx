@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Box,
-  Grid,
-  Stepper,
-  Step,
-  StepLabel,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { Button, Box, Stepper, Step, StepLabel } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import AccTypeSelector from "./AccTypeSelector";
+import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
+import InitialAgreementModal from "./InitialAgreementModal.tsx";
 import { globalStyles } from "../../global.ts";
 import "../registration/styles/registration.css";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { FormControlLabel, Checkbox } from "@mui/material";
 
 const steps = ["Select Account Type", "Enter Details", "Create Account"];
 
 const Signup: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [accountType, setAccountType] = useState<
-    "HOST" | "INSTRUCTOR" | "LEARNER/PARTICIPANT/GUEST"
+    "HOST" | "INSTRUCTOR" | "LEARNER" | "GUEST"
   >("HOST");
+
+  // Consolidated form values for all steps
   const [formValues, setFormValues] = useState({
+    accountType: "HOST",
     username: "",
     firstName: "",
     lastName: "",
@@ -42,18 +35,49 @@ const Signup: React.FC = () => {
     showPassword: false,
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({
+    ageVerification: false,
+    parentalWaiver: false,
+    stretchingHabits: false,
+  });
+
   const theme = useTheme();
   const isLightMode = theme.palette.mode === "light";
 
+  // Handle input changes and track form data
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormValues({
+    const updatedFormValues = {
       ...formValues,
       [name]: type === "checkbox" ? checked : value,
+    };
+    setFormValues(updatedFormValues);
+
+    console.log(`Field ${name} updated:`, value);
+    console.log("Current Form Values:", updatedFormValues);
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setCheckedItems({
+      ...checkedItems,
+      [name]: checked,
     });
   };
 
+  const allChecked = Object.values(checkedItems).every(Boolean);
+
   const handleNext = () => {
+    if (activeStep === 0) {
+      setIsModalOpen(true);
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+  };
+
+  const handleConfirmAndCloseModal = () => {
+    setIsModalOpen(false);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -67,27 +91,32 @@ const Signup: React.FC = () => {
       alert("Passwords do not match");
       return;
     }
-    // Handle final form submission logic here
-    console.log("Form Values:", formValues);
-    console.log("Selected Account Type:", accountType);
+    console.log("Final Form Submission:", formValues);
   };
 
   return (
     <Box
       sx={{
         ...globalStyles.pageContainer,
+        paddingX: { xs: 1, sm: 4 },
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
+        height: "auto",
+        minHeight: "80vh",
       }}
     >
       <form
         onSubmit={handleSubmit}
         style={{
-          padding: "20px",
+          padding: "20px 10px",
           boxShadow: theme.shadows[2],
           width: "100%",
           maxWidth: "600px",
+          minHeight: "50vh",
           borderRadius: "12px",
+          backgroundColor: isLightMode
+            ? "#fff" // Light background for light mode
+            : "#090709", // Darker background for dark mode to make the form stand out
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -115,188 +144,26 @@ const Signup: React.FC = () => {
 
         {activeStep === 0 && (
           <AccTypeSelector
-            accountType={accountType}
-            setAccountType={setAccountType}
+            accountType={formValues.accountType as any}
+            setAccountType={(type) =>
+              setFormValues({ ...formValues, accountType: type })
+            }
           />
         )}
 
         {activeStep === 1 && (
-          <Grid container spacing={2} sx={{ py: 6, px: 2 }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Username"
-                name="username"
-                value={formValues.username}
-                onChange={handleInputChange}
-                required
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="First Name"
-                name="firstName"
-                value={formValues.firstName}
-                onChange={handleInputChange}
-                required
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Last Name"
-                name="lastName"
-                value={formValues.lastName}
-                onChange={handleInputChange}
-                required
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="City"
-                name="city"
-                value={formValues.city}
-                onChange={handleInputChange}
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="State"
-                name="state"
-                value={formValues.state}
-                onChange={handleInputChange}
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Date of Birth"
-                name="dateOfBirth"
-                type="date"
-                value={formValues.dateOfBirth}
-                onChange={handleInputChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                required
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phoneNumber"
-                value={formValues.phoneNumber}
-                onChange={handleInputChange}
-                className="textField-focused" /* Apply CSS class */
-              />
-            </Grid>
-          </Grid>
+          <StepTwo
+            formValues={formValues}
+            handleInputChange={handleInputChange}
+          />
         )}
 
         {activeStep === 2 && (
-          <Box>
-            <Grid container spacing={2} sx={{ py: 6, px: 2 }}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formValues.email}
-                  onChange={handleInputChange}
-                  required
-                  className="textField-focused" /* Apply CSS class */
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Password"
-                  name="password"
-                  type={formValues.showPassword ? "text" : "password"}
-                  value={formValues.password}
-                  onChange={handleInputChange}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={() =>
-                            setFormValues({
-                              ...formValues,
-                              showPassword: !formValues.showPassword,
-                            })
-                          }
-                          edge="end"
-                        >
-                          {formValues.showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  className="textField-focused" /* Apply CSS class */
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type={formValues.showPassword ? "text" : "password"}
-                  value={formValues.confirmPassword}
-                  onChange={handleInputChange}
-                  required
-                  className="textField-focused" /* Apply CSS class */
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "2px",
-                    mb: 2,
-                  }}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={formValues.textUpdates}
-                        onChange={handleInputChange}
-                        name="textUpdates"
-                      />
-                    }
-                    label="Sign up for text updates"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={formValues.newsletter}
-                        onChange={handleInputChange}
-                        name="newsletter"
-                      />
-                    }
-                    label="Sign up for newsletter"
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
+          <StepThree
+            formValues={formValues}
+            handleInputChange={handleInputChange}
+            setFormValues={setFormValues}
+          />
         )}
 
         <Box
@@ -335,6 +202,16 @@ const Signup: React.FC = () => {
           )}
         </Box>
       </form>
+
+      <InitialAgreementModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Account Type Selected"
+        description={`You have selected the account type: ${formValues.accountType}`}
+        confirmButtonText="Confirm"
+        onConfirm={handleConfirmAndCloseModal}
+        accountType={formValues.accountType.toLowerCase()} // Pass the account type in lowercase
+      />
     </Box>
   );
 };
