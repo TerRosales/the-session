@@ -1,3 +1,5 @@
+// StepThree.tsx
+
 import React from "react";
 import {
   Grid,
@@ -10,41 +12,12 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { FormValues } from "./Signup"; // Import the FormValues interface
 
 interface StepThreeProps {
-  formValues: {
-    username: string;
-    firstName: string;
-    lastName: string;
-    city: string;
-    state: string;
-    dateOfBirth: string;
-    phoneNumber: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    textUpdates: boolean;
-    newsletter: boolean;
-    showPassword: boolean;
-  };
+  formValues: FormValues;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setFormValues: React.Dispatch<
-    React.SetStateAction<{
-      username: string;
-      firstName: string;
-      lastName: string;
-      city: string;
-      state: string;
-      dateOfBirth: string;
-      phoneNumber: string;
-      email: string;
-      password: string;
-      confirmPassword: string;
-      textUpdates: boolean;
-      newsletter: boolean;
-      showPassword: boolean;
-    }>
-  >;
+  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>;
 }
 
 const StepThree: React.FC<StepThreeProps> = ({

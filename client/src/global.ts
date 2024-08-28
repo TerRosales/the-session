@@ -47,7 +47,6 @@ export const globalStyles: GlobalStyles = {
     paddingX: { xs: 2, sm: 4 },
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
   },
   textTitle: {

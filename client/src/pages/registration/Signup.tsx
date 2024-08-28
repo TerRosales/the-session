@@ -7,18 +7,29 @@ import StepThree from "./StepThree";
 import InitialAgreementModal from "./InitialAgreementModal.tsx";
 import { globalStyles } from "../../global.ts";
 import "../registration/styles/registration.css";
-import { FormControlLabel, Checkbox } from "@mui/material";
+
+export interface FormValues {
+  accountType: "HOST" | "INSTRUCTOR" | "LEARNER" | "GUEST";
+  username: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  state: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  textUpdates: boolean;
+  newsletter: boolean;
+  showPassword: boolean;
+}
 
 const steps = ["Select Account Type", "Enter Details", "Create Account"];
 
 const Signup: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [accountType, setAccountType] = useState<
-    "HOST" | "INSTRUCTOR" | "LEARNER" | "GUEST"
-  >("HOST");
-
-  // Consolidated form values for all steps
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<FormValues>({
     accountType: "HOST",
     username: "",
     firstName: "",
@@ -36,16 +47,65 @@ const Signup: React.FC = () => {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState({
-    ageVerification: false,
-    parentalWaiver: false,
-    stretchingHabits: false,
-  });
-
   const theme = useTheme();
   const isLightMode = theme.palette.mode === "light";
 
-  // Handle input changes and track form data
+  const validatePassword = (): string[] => {
+    const errors: string[] = [];
+
+    if (formValues.password.length < 8) {
+      errors.push("Password must be at least 8 characters long.");
+    }
+    if (!/[A-Z]/.test(formValues.password)) {
+      errors.push("Password must contain at least one uppercase letter.");
+    }
+    if (!/[a-z]/.test(formValues.password)) {
+      errors.push("Password must contain at least one lowercase letter.");
+    }
+    if (!/[0-9]/.test(formValues.password)) {
+      errors.push("Password must contain at least one number.");
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(formValues.password)) {
+      errors.push("Password must contain at least one special character.");
+    }
+    if (formValues.password !== formValues.confirmPassword) {
+      errors.push("Passwords do not match.");
+    }
+
+    return errors;
+  };
+
+  const validateName = (name: string): string[] => {
+    const errors: string[] = [];
+    if (/\d/.test(name)) {
+      errors.push("Name cannot contain numbers.");
+    }
+    return errors;
+  };
+
+  const validateAge = (): string[] => {
+    const errors: string[] = [];
+    const today = new Date();
+    const birthDate = new Date(formValues.dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    if (age < 7) {
+      errors.push("You must be at least 7 years old to register.");
+    } else if (age > 120) {
+      errors.push("You must be less than 120 years old to register.");
+    }
+
+    return errors;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     const updatedFormValues = {
@@ -57,16 +117,6 @@ const Signup: React.FC = () => {
     console.log(`Field ${name} updated:`, value);
     console.log("Current Form Values:", updatedFormValues);
   };
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setCheckedItems({
-      ...checkedItems,
-      [name]: checked,
-    });
-  };
-
-  const allChecked = Object.values(checkedItems).every(Boolean);
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -87,11 +137,26 @@ const Signup: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formValues.password !== formValues.confirmPassword) {
-      alert("Passwords do not match");
+
+    const passwordErrors = validatePassword();
+    const firstNameErrors = validateName(formValues.firstName);
+    const lastNameErrors = validateName(formValues.lastName);
+    const ageErrors = validateAge();
+
+    const errors = [
+      ...passwordErrors,
+      ...firstNameErrors,
+      ...lastNameErrors,
+      ...ageErrors,
+    ];
+
+    if (errors.length > 0) {
+      alert(errors.join("\n"));
       return;
     }
+
     console.log("Final Form Submission:", formValues);
+    // Proceed with form submission logic
   };
 
   return (
@@ -99,10 +164,11 @@ const Signup: React.FC = () => {
       sx={{
         ...globalStyles.pageContainer,
         paddingX: { xs: 1, sm: 4 },
+        paddingY: { xs: 6, sm: 14, lg: 20 },
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
         height: "auto",
-        minHeight: "80vh",
+        minHeight: "75vh",
       }}
     >
       <form
@@ -112,11 +178,8 @@ const Signup: React.FC = () => {
           boxShadow: theme.shadows[2],
           width: "100%",
           maxWidth: "600px",
-          minHeight: "50vh",
           borderRadius: "12px",
-          backgroundColor: isLightMode
-            ? "#fff" // Light background for light mode
-            : "#090709", // Darker background for dark mode to make the form stand out
+          backgroundColor: isLightMode ? "#fff" : "#090709",
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -144,10 +207,10 @@ const Signup: React.FC = () => {
 
         {activeStep === 0 && (
           <AccTypeSelector
-            accountType={formValues.accountType as any}
-            setAccountType={(type) =>
-              setFormValues({ ...formValues, accountType: type })
-            }
+            accountType={formValues.accountType}
+            setAccountType={(
+              type: "HOST" | "INSTRUCTOR" | "LEARNER" | "GUEST"
+            ) => setFormValues({ ...formValues, accountType: type })}
           />
         )}
 
@@ -210,7 +273,13 @@ const Signup: React.FC = () => {
         description={`You have selected the account type: ${formValues.accountType}`}
         confirmButtonText="Confirm"
         onConfirm={handleConfirmAndCloseModal}
-        accountType={formValues.accountType.toLowerCase()} // Pass the account type in lowercase
+        accountType={
+          formValues.accountType.toLowerCase() as
+            | "guest"
+            | "learner"
+            | "host"
+            | "instructor"
+        }
       />
     </Box>
   );

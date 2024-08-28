@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography, Button, Divider, Alert } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { globalStyles } from "../../global.ts";
@@ -31,8 +31,13 @@ const InitialAgreementModal: React.FC<InitialAgreementModalProps> = ({
   const isLightMode = theme.palette.mode === "light";
 
   const [checklistItems, setChecklistItems] = useState(
-    checklistData2.termsAndCondition[accountType] // Use the selected account type's checklist
+    checklistData2.termsAndCondition[accountType]
   );
+
+  // Use useEffect to update the checklistItems when accountType changes
+  useEffect(() => {
+    setChecklistItems(checklistData2.termsAndCondition[accountType]);
+  }, [accountType]);
 
   const toggleChecklistItem = (id: number) => {
     setChecklistItems((prevItems) =>
