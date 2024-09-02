@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import Axios
 import { Button, Box, Stepper, Step, StepLabel } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import AccTypeSelector from "./AccTypeSelector";
@@ -65,7 +66,7 @@ const Signup: React.FC = () => {
     if (!/[0-9]/.test(formValues.password)) {
       errors.push("Password must contain at least one number.");
     }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(formValues.password)) {
+    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(formValues.password)) {
       errors.push("Password must contain at least one special character.");
     }
     if (formValues.password !== formValues.confirmPassword) {
@@ -135,7 +136,7 @@ const Signup: React.FC = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const passwordErrors = validatePassword();
@@ -155,8 +156,51 @@ const Signup: React.FC = () => {
       return;
     }
 
-    console.log("Final Form Submission:", formValues);
-    // Proceed with form submission logic
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        {
+          username: formValues.username,
+          email: formValues.email,
+          password: formValues.password,
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          city: formValues.city,
+          state: formValues.state,
+          dateOfBirth: formValues.dateOfBirth,
+          accountType: formValues.accountType,
+          phoneNumber: formValues.phoneNumber,
+        }
+      );
+
+      console.log("Signup successful:", response.data);
+      alert("Signup successful!");
+
+      // Optional: Reset form or redirect user
+      setFormValues({
+        accountType: "HOST",
+        username: "",
+        firstName: "",
+        lastName: "",
+        city: "",
+        state: "",
+        dateOfBirth: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        textUpdates: false,
+        newsletter: false,
+        showPassword: false,
+      });
+      setActiveStep(0);
+    } catch (error: any) {
+      console.error("Signup failed:", error.response?.data || error.message);
+      alert(
+        error.response?.data?.message ||
+          "An error occurred during signup. Please try again."
+      );
+    }
   };
 
   return (
@@ -179,7 +223,7 @@ const Signup: React.FC = () => {
           width: "100%",
           maxWidth: "600px",
           borderRadius: "12px",
-          backgroundColor: isLightMode ? "#fff" : "#090709",
+          backgroundColor: isLightMode ? "#fff" : theme.palette.primary.main,
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -270,7 +314,7 @@ const Signup: React.FC = () => {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Account Type Selected"
-        description={`You have selected the account type: ${formValues.accountType}`}
+        description={`As a <span style="font-weight: bold;">${formValues.accountType}</span> you must agree to these initial terms and conditions before proceeding.`}
         confirmButtonText="Confirm"
         onConfirm={handleConfirmAndCloseModal}
         accountType={

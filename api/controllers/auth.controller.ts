@@ -1,9 +1,14 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { User } from "../models/user.model";
 import bcrypt from "bcryptjs";
+import { AppError } from "../utility/errorHandler";
 
 // Register a new user
-export const registration = async (req: Request, res: Response) => {
+export const signup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const {
     username,
     email,
@@ -59,11 +64,11 @@ export const registration = async (req: Request, res: Response) => {
       id: newUser._id,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    next(new AppError("Server error", 500));
   }
 };
 
 // Placeholder for login function
-export const login = (req: Request, res: Response) => {
+export const signin = (req: Request, res: Response) => {
   res.send("Login endpoint");
 };

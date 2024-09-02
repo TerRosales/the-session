@@ -31,6 +31,11 @@ const userSchema: Schema = new Schema(
       enum: ["HOST", "INSTRUCTOR", "LEARNER", "GUEST"],
     },
     phoneNumber: { type: String, required: false },
+    isVerified: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
+    AgreedToTerms: { type: Boolean, default: false },
+    AgreedtoInitialAgreement: { type: Boolean, default: false },
+    ParentsWaiverSigned: { type: Boolean, default: false },
   },
   {
     timestamps: true,

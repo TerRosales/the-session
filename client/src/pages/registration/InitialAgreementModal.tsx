@@ -120,15 +120,14 @@ const InitialAgreementModal: React.FC<InitialAgreementModalProps> = ({
         <Typography
           id="modal-description"
           sx={{ mt: 2, mb: 4, color: "inherit" }}
-        >
-          {description}
-        </Typography>
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
 
         {/* Optional Children Content */}
         {children && <Box sx={{ mb: 4, color: "inherit" }}>{children}</Box>}
 
         {/* Checklist Items */}
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mb: 5 }}>
           {checklistItems.map((item) => (
             <Alert
               key={item.id}

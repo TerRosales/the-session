@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors"; // This lets our frontend talk to our backend even if they're on different ports
 import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/user.route";
+import { globalErrorHandler } from "./utility/errorHandler";
 
 // Load environment variables from the .env file (like secret codes we don't want to share)
 dotenv.config();
@@ -20,7 +21,7 @@ app.use(express.json());
 // Let our frontend talk to us (CORS makes sure our frontend can get candy from our backend)
 app.use(
   cors({
-    origin: "http://localhost:3000", // This is where our frontend is, so we let it in
+    origin: "http://localhost:5173", // This is where our frontend is, so we let it in
     credentials: true, // This lets us send cookies or session info if we need to
   })
 );
@@ -48,3 +49,4 @@ app.listen(port, () => {
 // Hook up our routes (like adding different sections in our store for different things)
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use(globalErrorHandler);
