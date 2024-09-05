@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./styles/Header.css";
 import { pages } from "../utility/data";
 import ThemeToggler from "./ThemeToggler";
+import { useTheme } from "@mui/material/styles";
 
 interface HeaderProps {
   onThemeToggle: () => void;
@@ -21,6 +22,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
+  const theme = useTheme(); // Get the current theme
+
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -65,10 +68,12 @@ const Header: React.FC<HeaderProps> = ({ onThemeToggle, darkMode }) => {
       position="static"
       sx={{
         py: 3,
-        backgroundColor: darkMode ? "#0a0a0a" : "#ffffff",
-        borderBottom: darkMode
-          ? "2px solid rgba(255, 255, 255, 0.3)" // Light border for dark mode
-          : "2px solid rgba(0, 0, 0, 0.1)", // Dark border for light mode
+        backgroundColor: darkMode ? "rgba(0, 0, 0, 0.99)" : "f5f5f5", // Matching background
+        color: theme.palette.text.primary, // Use theme text color
+        borderBottom: "2px solid", // Matching thickness
+        borderColor: darkMode
+          ? "rgba(100, 100, 100, 0.2)" // Matching border color
+          : "rgba(0, 0, 0, 0.1)",
       }}
     >
       <Container maxWidth="xl">

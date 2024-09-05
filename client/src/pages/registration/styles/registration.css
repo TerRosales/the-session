@@ -35,7 +35,7 @@
 }
 
 .textField-focused .MuiOutlinedInput-root.Mui-focused {
-  background-color: rgba(206, 174, 220, 0.9); /* Light mode background color */
+  background-color: rgba(241, 220, 250, 0.9); /* Light mode background color */
 }
 
 /* Dark mode adjustments */

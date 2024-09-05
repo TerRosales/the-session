@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, Grid, Divider } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import UpcomingEvent from "../components/UpcomingEvent.tsx";
 import { globalStyles } from "../global.ts";
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
       </Typography>
 
       <Grid container sx={{ mt: 4 }} spacing={4} justifyContent="center">
-        {events.map((event) => (
+        {events.slice(0, 3).map((event) => (
           <Grid item key={event.id} xs={12} sm="auto">
             <UpcomingEvent
               title={event.title}

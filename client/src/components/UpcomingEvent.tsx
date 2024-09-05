@@ -32,7 +32,7 @@ const UpcomingEvent: React.FC<UpcomingEventProps> = ({
         textAlign: "center",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
         width: { xs: "100%", sm: "350px" },
-        height: { xs: "auto", sm: "500px" },
+        height: { xs: "auto" },
         marginLeft: "auto",
         marginRight: "auto",
         boxShadow:

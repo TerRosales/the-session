@@ -16,6 +16,15 @@ import heroImg05 from "./heroImg05.jpg";
 import heroImg06 from "./heroImg06.jpg";
 import heroImg07 from "./heroImg07.jpg";
 import heroImg08 from "./heroImg08.jpg";
+import heroImg09 from "./danceImg06.webp";
+import heroImg10 from "./danceImg07.webp";
+import heroImg11 from "./danceImg08.webp";
+import heroImg12 from "./danceImg09.webp";
+import heroImg13 from "./danceImg10.webp";
+import heroImg14 from "./danceImg11.webp";
+import heroImg15 from "./danceImg12.webp";
+import heroImg16 from "./danceImg13.webp";
+import heroImg17 from "./danceImg14.webp";
 import instructor01 from "./instructor01.jpg";
 import instructor02 from "./instructor02.jpg";
 import instructor03 from "./instructor03.jpg";
@@ -39,6 +48,15 @@ export const images = {
     heroImg06,
     heroImg07,
     heroImg08,
+    heroImg09,
+    heroImg10,
+    heroImg11,
+    heroImg12,
+    heroImg13,
+    heroImg14,
+    heroImg15,
+    heroImg16,
+    heroImg17,
   ],
   instructors: [
     instructor01,

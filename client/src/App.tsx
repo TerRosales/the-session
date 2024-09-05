@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 import Test from "./components/Test";
 import Home from "./pages/Home";
-import Mission from "./pages/Mission";
 import Movements from "./pages/Movements";
 import Signin from "./pages/registration/Signin";
 import Signup from "./pages/registration/Signup";
@@ -27,14 +26,14 @@ const App: React.FC<AppProps> = ({ darkMode, onThemeToggle }) => {
       <Box sx={{ flexGrow: 1 }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/mission" element={<Mission />} />
+
           <Route path="/movements" element={<Movements />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/test" element={<Test />} />
         </Routes>
       </Box>
-      <Footer />
+      <Footer darkMode={darkMode} />
     </Box>
   );
 };

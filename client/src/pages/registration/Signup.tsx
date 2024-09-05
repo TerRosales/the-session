@@ -66,7 +66,7 @@ const Signup: React.FC = () => {
     if (!/[0-9]/.test(formValues.password)) {
       errors.push("Password must contain at least one number.");
     }
-    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(formValues.password)) {
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(formValues.password)) {
       errors.push("Password must contain at least one special character.");
     }
     if (formValues.password !== formValues.confirmPassword) {

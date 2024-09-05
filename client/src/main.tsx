@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme, darkTheme } from "./theme";
 
-const Main = () => {
+export const Main = () => {
   const [darkMode, setDarkMode] = React.useState(false);
 
   const handleThemeToggle = () => {

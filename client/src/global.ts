@@ -58,7 +58,6 @@ export const globalStyles: GlobalStyles = {
   textSubTitle: {
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: { xs: 1, sm: 2, lg: 3 },
     fontSize: { xs: "1.8rem", sm: "1.9rem", md: "2rem", lg: "2.5rem" },
   },
   textStatement: {
